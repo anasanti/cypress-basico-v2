@@ -1,12 +1,7 @@
-// CAC-TAT.spec.js created with Cypress
-//
-// Start writing your Cypress tests below!
-// If you're unfamiliar with how Cypress works,
-// check out the link below and learn how to write your first test:
-// https://on.cypress.io/writing-first-test
-/// <reference types="Cypress" />
-
 describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> define a suite do teste
+ 
+  const three_seconds_ms = 3000
+
   beforeEach(function() {
     cy.visit('./src/index.html')
   })
@@ -16,7 +11,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
   })
 
   it('preenche os campos obrigatórios e envia o formulário', function() {
-    const longTest = 'Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! '
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 20)
+    cy.clock()
 
     cy.get('[id="firstName"]')
       .click()
@@ -43,11 +39,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
     cy.get('.success')
       .should('be.visible')
 
+    cy.tick(three_seconds_ms)
+    cy.get('.success')
+      .should('not.be.visible')
+
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
 
-    const longTest = 'Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! '
+    cy.clock()
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 20)
 
     cy.get('[id="firstName"]')
       .click()
@@ -74,6 +75,19 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
      cy.get('.error')
      .should('be.visible')
   
+    cy.tick(three_seconds_ms)
+    cy.get('.error')
+     .should('not.be.visible')
+  })
+
+  Cypress._.times(3, function(){
+    it('Campo telefone vazio quando não apresenta valor numerico', function() {
+  
+    cy.get('[id="phone"]')
+      .click()
+      .type('Ana Carolina')
+      .should('have.value', '')
+  })
   })
 
   it('Campo telefone vazio quando não apresenta valor numerico', function() {
@@ -86,7 +100,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
   
-    const longTest = 'Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! '
+    cy.clock()
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 20)
 
     cy.get('[id="firstName"]')
       .click()
@@ -116,11 +131,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
    cy.get('.error')
      .should('be.visible')
 
+    cy.tick(three_seconds_ms)
+
+    cy.get('.error')
+      .should('not.be.visible')
+
   })
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
     
-    const longTest = 'Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! '
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 20)
 
     cy.get('[id="firstName"]')
       .click()
@@ -162,10 +182,12 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
   })
 
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
-    
+    cy.clock()
     cy.contains('button','Enviar').click()
 
     cy.get('.error').should('be.visible')
+    cy.tick(three_seconds_ms)
+    cy.get('.error').should('not.be.visible')
 
   })
 
@@ -220,8 +242,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
   })
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function() {
-    const longTest = 'Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! Blá blá blá! '
-
+    cy.clock()
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 20)
     cy.get('[id="firstName"]')
       .click()
       .type('Ana Carolina')
@@ -250,6 +272,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
       .click()
     cy.get('.error')
       .should('be.visible')
+
+    cy.tick(three_seconds_ms)
+    cy.get('.error')
+      .should('not.be.visible')
   })
 
   it('seleciona um arquivo da pasta fixtures', function() {
@@ -298,4 +324,50 @@ describe('Central de Atendimento ao Cliente TAT', function() {//Describe -> defi
       .should('be.visible')
   })
 
+  it('exibe e esconde as mensagens de sucesso e erro usando o .invoke()' , function() {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it('preenche a area de texto usando o comando invoke' , function() {
+    const longTest = Cypress._.repeat("Blá, blá, blá! ", 200)
+          
+    cy.get('[id="open-text-area"]')
+      .invoke('val', longTest)
+      .should('have.value', longTest)
+  })
+
+  it('faz uma requisição HTTP' , function() {
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+      .should(function(response){
+        const{status, statusText, body} = response
+        expect(status).to.equal(200)
+        expect(statusText).to.equal('OK')
+        expect(body).to.include('CAC TAT')
+      })
+  })
+
+  it.only('Encontrar o gato', function(){
+    cy.get('#cat')
+    .should('not.be.visible')
+    .invoke('show')
+    .should('be.visible')
+    .and('contain', '🐈')
+    .invoke('hide')
+    .should('not.be.visible')
+  })
 })
+ 
